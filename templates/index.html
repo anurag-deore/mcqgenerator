@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Generator</title>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/2b39cc7aa8.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        * {
+            font-family: 'Ibm Plex sans var', sans-serif;
+        }
+
+        body {
+            background-color: #222831;
+            color: white;
+        }
+
+        a.navbar-brand {
+            font-size: 25px;
+            color: black !important;
+            font-weight: 900;
+        }
+
+        .card {
+            background-color: #151515;
+            border-radius: 15px;
+        }
+
+        .btn {
+            background-color: #30e3ca;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn:focus {
+            transform: scale(0.98);
+        }
+
+        .inputstyle {
+            background-color: #151515;
+            border: 2px solid grey;
+            border-radius: 15px;
+            color: lightgray;
+        }
+
+        .inputstyle:focus {
+            border: 2px solid #b8b5ff;
+            outline: none;
+        }
+
+        .filelabel {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed grey;
+            border-radius: 15px;
+            /* display: block; */
+            padding: 5px;
+            transition: border 300ms ease;
+            cursor: pointer;
+            text-align: center;
+            margin: 0;
+        }
+
+        .filelabel i {
+            display: block;
+            font-size: 35px;
+            padding-bottom: 5px;
+            transition: 200ms color;
+            color: grey;
+        }
+
+        .filelabel .title {
+            font-size: 20px;
+            transition: 200ms color;
+            color: grey;
+        }
+
+        .filelabel:hover {
+            border: 2px solid #b8b5ff;
+        }
+
+        .filelabel:hover i,
+        .filelabel:hover .title {
+            color: #b8b5ff;
+        }
+
+        #FileInput {
+            display: none;
+        }
+
+        *::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        *::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px transparent;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            background-color: darkgrey;
+            outline: none;
+        }
+
+        .teal {
+            color: #30e3ca;
+        }
+
+        .alertinfo {
+            padding: 10px 20px;
+            align-self: center;
+            font-size: 20px;
+            width: fit-content;
+            border-radius: 15px;
+            font-weight: 600;
+            background-color: rgb(243, 202, 202);
+            color: crimson;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #30e3ca;">
+        <div class="container">
+            <a class="navbar-brand" href="{{url_for('index')}}">MCQ Generator</a>
+            <a class="float-end navbar-brand" title="Team" href="{{url_for('about')}}">
+                <i class="fas fa-code"></i>
+            </a>
+        </div>
+    </nav>
+    <div class="d-flex justify-content-center align-items-center d-none">
+        <div class="alertinfo mt-4"> <i class="fa fa-exclamation-circle me-2"></i> File cannot be empty</div>
+    </div>
+    <div class="container mt-4">
+        <div class="d-flex align-items-stretch">
+            <div class="card shadow w-100 me-2">
+                <div class="pt-3 fw-bolder teal h5 text-center">Paste Text</div>
+                <form action="getMCQ" class="h-100" method="POST">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <textarea name="inputtext" placeholder="Enter your text here" style="resize: none;" rows="18"
+                            class="p-2 w-100 inputstyle"></textarea>
+                        <input type="hidden" name="inptype" value="text">
+                        <button style="width: fit-content;" class="btn px-5 mt-3 rounded-pill">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card shadow w-100 ms-2">
+                <div class="pt-3 fw-bolder teal h5 text-center">Choose file</div>
+                <form action="getMCQ" class="h-100" method="POST" enctype="multipart/form-data">
+                    <div class="card-body d-flex h-100 flex-column justify-content-center align-items-center">
+                        <label class="filelabel">
+                            <i class="fa fa-paperclip"></i>
+                            <span class="title">Add File</span>
+                            <input class="FileUpload1" id="FileInput" type="file" accept="text/plain" name="myFile" />
+                        </label>
+                        <input type="hidden" name="inptype" value="file">
+                        <button style="width: fit-content;" class="btn px-5 mt-3 rounded-pill">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $("#FileInput").on('change', function (e) {
+            var labelVal = $(".title").text();
+            var oldfileName = $(this).val();
+            fileName = e.target.value.split('\\').pop();
+
+            if (oldfileName == fileName) { return false; }
+            var extension = fileName.split('.').pop();
+
+            if ($.inArray(extension, ['jpg', 'jpeg', 'png']) >= 0) {
+                $(".filelabel i").removeClass().addClass('fa fa-file-image-o');
+                $(".filelabel i, .filelabel .title").css({ 'color': '#208440' });
+                $(".filelabel").css({ 'border': ' 2px solid #208440' });
+            }
+            else if (extension == 'pdf') {
+                $(".filelabel i").removeClass().addClass('fa fa-file-pdf-o');
+                $(".filelabel i, .filelabel .title").css({ 'color': 'red' });
+                $(".filelabel").css({ 'border': ' 2px solid red' });
+
+            }
+            else if (extension == 'doc' || extension == 'docx') {
+                $(".filelabel i").removeClass().addClass('fa fa-file-word-o');
+                $(".filelabel i, .filelabel .title").css({ 'color': '#2388df' });
+                $(".filelabel").css({ 'border': ' 2px solid #2388df' });
+            }
+            else {
+                $(".filelabel i").removeClass().addClass('fa fa-file-alt');
+                $(".filelabel i, .filelabel .title").css({ 'color': '#24bbc0' });
+                $(".filelabel").css({ 'border': ' 2px solid #24bbc0' });
+            }
+
+            if (fileName) {
+                if (fileName.length > 10) {
+                    $(".filelabel .title").text(fileName.slice(0, 4) + '...' + extension);
+                }
+                else {
+                    $(".filelabel .title").text(fileName);
+                }
+            }
+            else {
+                $(".filelabel .title").text(labelVal);
+            }
+        });
+    </script>
+</body>
+
+</html>
