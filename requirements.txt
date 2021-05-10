@@ -47,7 +47,6 @@ thinc==8.0.3
 threadpoolctl==2.1.0
 tokenizers==0.10.2
 toml==0.10.2
-torch==1.8.1
 tqdm==4.60.0
 transformers==4.5.1
 typer==0.3.2
@@ -58,3 +57,4 @@ wasabi==0.8.2
 Werkzeug==1.0.1
 wn==0.0.23
 zipp==3.4.1
+torch==1.8.1
