@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Generator</title>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/2b39cc7aa8.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        * {
+            font-family: 'Karla', sans-serif;
+        }
+
+        body {
+            background-color: #222831;
+            color: lightgray;
+        }
+
+        a.navbar-brand {
+            font-size: 25px;
+            color: black !important;
+            font-weight: 900;
+        }
+
+        .btn {
+            background-color: #30e3ca;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn:focus {
+            transform: scale(0.98);
+        }
+
+        *::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        *::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px transparent;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            background-color: darkgrey;
+            outline: none;
+        }
+
+        .tab-pane {
+            text-align: justify;
+        }
+
+        .nav-link.active {
+            color: black !important;
+            background-color: #30e3ca !important;
+        }
+
+        .nav-link {
+            color: #30e3ca;
+        }
+
+        .nav-link:hover {
+            color: #30e3ca;
+            opacity: 0.8;
+        }
+
+        .tab-content {
+            height: 85vh;
+            overflow: scroll;
+            border: 2px solid grey;
+            background-color: #151515;
+            border-radius: 15px;
+        }
+
+        .textlavender {
+            color: #b8b5ff;
+        }
+
+        .answercard {
+            display: flex;
+            padding: 10px 20px;
+            justify-content: start;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            border: 1px solid lightgray;
+            border-radius: 15px;
+        }
+
+        .answercard i {
+            font-size: small;
+        }
+
+        .copybtn {
+            float: right;
+            font-size: 20px;
+            padding: 5px;
+            color: #b8b5ff;
+        }
+
+        .copybtn:active {
+            transform: scale(0.95);
+        }
+
+        #copyalert {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #d1d1ff;
+            color: #661af1;
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #30e3ca;">
+        <div class="container">
+            <a class="navbar-brand" href="{{url_for('index')}}">MCQ Generator</a>
+            <a class="float-end navbar-brand" title="Team" href="{{url_for('about')}}">
+                <i class="fas fa-code"></i>
+            </a>
+        </div>
+    </nav>
+    <div class="container-fluid mt-4">
+        <div class="d-flex align-items-start">
+            <div style="flex:0.13;" class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-mcqs-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-mcqs" type="button" role="tab" aria-controls="v-pills-mcqs"
+                    aria-selected="false">Generated MCQ's</button>
+                <button class="nav-link" id="v-pills-summary-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-summary" type="button" role="tab" aria-controls="v-pills-summary"
+                    aria-selected="false">Summary of text</button>
+                <button class="nav-link " id="v-pills-text-tab" data-bs-toggle="pill" data-bs-target="#v-pills-text"
+                    type="button" role="tab" aria-controls="v-pills-text" aria-selected="true">Full input text</button>
+            </div>
+            <div style="flex:0.87;" class="tab-content shadow p-3" id="v-pills-tabContent">
+                <div class="tab-pane fade" id="v-pills-text" role="tabpanel" aria-labelledby="v-pills-text-tab">
+                    <a href="#" class="copybtn" title="Click to Copy"
+                        onclick="CopyToClipboard('full_text');return false;">
+                        <i class="far fa-copy"></i>
+                    </a>
+                    <h3 class="textlavender">Input Text</h3>
+                    <hr>
+                    <span id="full_text">{{full_text}}</span>
+                </div>
+                <div class="tab-pane fade" id="v-pills-summary" role="tabpanel" aria-labelledby="v-pills-summary-tab">
+                    <a href="#" class="copybtn" title="Click to Copy"
+                        onclick="CopyToClipboard('summarized_text');return false;">
+                        <i class="far fa-copy"></i>
+                    </a>
+                    <h3 class="textlavender">Summary</h3>
+                    <hr>
+                    <span id="summarized_text">{{ summarized_text }}</span>
+                </div>
+                <div class="tab-pane fade show active" id="v-pills-mcqs" role="tabpanel"
+                    aria-labelledby="v-pills-mcqs-tab">
+                    <h3 class="textlavender">Multiple Choice Questions</h3>
+                    {% for key in MCQ.keys() %}
+                    <hr>
+                    <p>
+                        <strong>{{ key }}. </strong>
+                        {{ MCQ[key]['question'] }}
+                    </p>
+                    <ol style="list-style-type: lower-latin;">
+                        {% for opt in MCQ[key]['options'] %}
+                        <li>{{ opt }}</li>
+                        {% endfor %}
+                    </ol>
+                    <p>
+                        <a class="btn" data-bs-toggle="collapse" href="#id{{loop.index}}" role="button"
+                            aria-expanded="false">
+                            Reveal Answer
+                        </a>
+                    </p>
+                    <div class="collapse" id="id{{loop.index}}">
+                        <div class="answercard bg-dark">
+                            <i class="fa fa-check me-2"></i> {{ MCQ[key]['answer'] }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert " style="display: none;" id="copyalert">
+        <i class="fa fa-check-circle me-2"></i> Copied !
+    </div>
+    <script>
+        function CopyToClipboard(id) {
+            var r = document.createRange();
+            r.selectNode(document.getElementById(id));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(r);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            $('#copyalert').fadeIn().delay(800).fadeOut();
+        }
+    </script>
+</body>
+
+</html>

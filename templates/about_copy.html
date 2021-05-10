@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Generator</title>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/2b39cc7aa8.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space Grotesk&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: #222831;
+            color: white;
+        }
+
+        a.navbar-brand {
+            font-size: 25px;
+            color: black !important;
+            font-weight: 900;
+        }
+
+        .card {
+            background-color: #151515;
+            border-radius: 15px;
+        }
+
+        .btn {
+            background-color: #30e3ca;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn:focus {
+            transform: scale(0.98);
+        }
+
+        .inputstyle {
+            background-color: #151515;
+            border: 2px solid grey;
+            border-radius: 15px;
+            color: lightgray;
+        }
+
+        .inputstyle:focus {
+            border: 2px solid #b8b5ff;
+            outline: none;
+        }
+
+        .filelabel {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed grey;
+            border-radius: 15px;
+            /* display: block; */
+            padding: 5px;
+            transition: border 300ms ease;
+            cursor: pointer;
+            text-align: center;
+            margin: 0;
+        }
+
+        .filelabel i {
+            display: block;
+            font-size: 35px;
+            padding-bottom: 5px;
+            transition: 200ms color;
+            color: grey;
+        }
+
+        .filelabel .title {
+            font-size: 20px;
+            transition: 200ms color;
+            color: grey;
+        }
+
+        .filelabel:hover {
+            border: 2px solid #b8b5ff;
+        }
+
+        .filelabel:hover i,
+        .filelabel:hover .title {
+            color: #b8b5ff;
+        }
+
+        #FileInput {
+            display: none;
+        }
+
+        *::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        *::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px transparent;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            background-color: darkgrey;
+            outline: none;
+        }
+
+        .teal {
+            color: #30e3ca;
+        }
+
+        .personcard {
+            padding: 20px;
+            font-size: 35px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hexagon {
+            position: relative;
+            width: 300px;
+            height: 173.21px;
+            background-color: #151e1e;
+            border-radius: 20px;
+            margin: 86.60px 0;
+            /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.45); */
+        }
+
+        .hexagon:before,
+        .hexagon:after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            width: 212.13px;
+            height: 212.13px;
+            border-radius: 20px;
+            -webkit-transform: scaleY(0.5774) rotate(-45deg);
+            -ms-transform: scaleY(0.5774) rotate(-45deg);
+            transform: scaleY(0.5774) rotate(-45deg);
+            background-color: inherit;
+            
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
+            left: 43.9340px;
+        }
+
+        .hexagon:before {
+            top: -106.0660px;
+            z-index: -2;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
+
+        }
+
+        .hexagon:after {
+            bottom: -106.0660px;
+            z-index: -2;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
+        }
+
+        /*cover up extra shadows*/
+        .hexagon span {
+            /* display: block;
+            position: absolute;
+            top: 0px;
+            left: 0; */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 300px;
+            height: 173.2051px;
+            border-radius: 20px;
+            z-index: 5;
+            padding: 20px;
+            font-size: 35px;
+            background: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #30e3ca;">
+        <div class="container">
+            <a class="navbar-brand" href="{{url_for('index')}}">MCQ Generator</a>
+            <a class="float-end navbar-brand" title="Team" href="getMCQ">
+                <i class="fas fa-code"></i>
+            </a>
+        </div>
+    </nav>
+    <div class="hexagon"><span>Anurag Deore</span></div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-4">
+                <div class="card personcard shadow">
+                    Anurag Deore
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card personcard shadow">
+                    Aniket Kamble
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card personcard shadow">
+                    Akshay Sahu
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
