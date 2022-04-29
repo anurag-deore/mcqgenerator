@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "__v": 0, 
+      "_id": "626b954fbefedd25264fb299", 
+      "courseDept": "WD", 
+      "courseName": "Node.js", 
+      "description": "Node.js is used to create back-end services", 
+      "duration": 10, 
+      "isApplied": true, 
+      "isRated": true, 
+      "noOfRatings": 15, 
+      "rating": 4.5
+    }, 
+    {
+      "__v": 0, 
+      "_id": "626b954fbefedd25264fb29a", 
+      "courseDept": "WD", 
+      "courseName": "React.js", 
+      "description": "React.js is used to create front-end services", 
+      "duration": 14, 
+      "isApplied": true, 
+      "isRated": true, 
+      "noOfRatings": 145, 
+      "rating": 4.3
+    }, 
+    {
+      "__v": 0, 
+      "_id": "626b954fbefedd25264fb29b", 
+      "courseDept": "WD", 
+      "courseName": "Angular", 
+      "description": "Angular is used to create front-end services", 
+      "duration": 18, 
+      "isApplied": false, 
+      "isRated": false, 
+      "noOfRatings": 10, 
+      "rating": 4.1
+    }, 
+    {
+      "__v": 0, 
+      "_id": "626b954fbefedd25264fb29c", 
+      "courseDept": "AI", 
+      "courseName": "Machine Learning", 
+      "description": "ML is used in AI", 
+      "duration": 20, 
+      "isApplied": true, 
+      "isRated": false, 
+      "noOfRatings": 18, 
+      "rating": 4.6
+    }, 
+    {
+      "__v": 0, 
+      "_id": "626b954fbefedd25264fb29d", 
+      "courseDept": "WD", 
+      "courseName": "Springboot", 
+      "description": "Springboot is used to create back-end services", 
+      "duration": 12, 
+      "isApplied": false, 
+      "isRated": false, 
+      "noOfRatings": 6, 
+      "rating": 4.4
+    }
+  ]
+}
